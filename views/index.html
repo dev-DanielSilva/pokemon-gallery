@@ -1,1 +1,43 @@
-print('Just a test file.')
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Gallery</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <h2 style="text-align: center;">Galeria Pokémon</h2><br>
+
+    <div class="row">
+        {% for img in images %}
+        <div class="col-md-3 m-auto">
+            <img src="/static/uploads/{{img.url}}" class="img-thumbnail">
+        </div>
+        {% endfor %}
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endwith %}
+
+    <div class="container col-6">
+        <div class="card mt-4">
+            <div class="card-body">
+                <form action="{{url_for('home')}}" method="post" enctype="multipart/form-data">
+                    <label for="file">Envie sua imagem:</label>
+                    <input class="form-control" name="file" type="file" required><br>
+                    <button type="submit" class="btn btn-danger btn-block">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
